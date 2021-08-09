@@ -38,7 +38,7 @@ def get_source(contest_id: int, id_: int) -> str:
 # contest_idからコンテスト名取得
 # ローカルのdbにあるならそこから取得
 def get_contest_name(contest_id: int) -> str:
-    dbname = "contest_name.db"
+    dbname = f"{os.path.dirname(__file__)}/contest_name.db"
     with sqlite3.connect(dbname) as conn:
         cur = conn.cursor()
 
@@ -130,11 +130,13 @@ def git_clean(r: git.Repo):
 
 
 if __name__ == '__main__':
-    with open('config.json', 'r') as f:
+    pwd = os.path.dirname(__file__)
+
+    with open(f'{pwd}/config.json', 'r') as f:
         js = json.load(f)
         git_url = js['upstream_url']
         user_name = js['handle']
-    path = 'submissions'
+    path = f'{pwd}/submissions'
     # リポジトリ用意
     try:
         repo = git.Repo(path)
