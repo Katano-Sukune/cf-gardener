@@ -1,6 +1,6 @@
 # cf-gardener
 
-Codeforcesの提出をGitHubに上げるやつ
+CodeforcesのACした提出をGitHubに上げるやつ
 
 ## 使い方
 
@@ -17,7 +17,6 @@ config.jsonに以下のように書き込む
 
 ```sh
 $pip install GitPython beautifulsoup4 requests
-$python cf-gardener.py
 ```
 
 実行
