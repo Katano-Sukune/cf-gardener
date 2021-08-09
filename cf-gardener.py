@@ -1,6 +1,7 @@
 import datetime
 import git
 import os
+from git import exc
 import requests
 import sqlite3
 import time
@@ -180,17 +181,20 @@ if __name__ == '__main__':
 
                 # ファイルが無いならスクレイピング
                 print(f'download {contest_name}/{index}_{name}/{subId}')
-                source_code = get_source(contestId, subId)
-                os.makedirs(directory, exist_ok=True)
-                with open(f'{directory}/{filename}', mode='w') as f:
-                    f.write(source_code)
-                cnt += 1
-                changed = True
-                # codeforcesに怒られるのでスクレイピングは50回まで
-                if cnt >= 50:
-                    break
-                # codeforcesに怒られないように待つ
-                time.sleep(2)
+                try:
+                    source_code = get_source(contestId, subId)
+                    os.makedirs(directory, exist_ok=True)
+                    with open(f'{directory}/{filename}', mode='w') as f:
+                        f.write(source_code)
+                    cnt += 1
+                    changed = True
+                    # codeforcesに怒られるのでスクレイピングは50回まで
+                    if cnt >= 50:
+                        break
+                    # codeforcesに怒られないように待つ
+                    time.sleep(2)
+                except AttributeError as ae:
+                    print(ae)
 
             # どの種類のエラーが出る?
             except Exception as e:
