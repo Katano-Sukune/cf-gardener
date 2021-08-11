@@ -137,6 +137,7 @@ if __name__ == '__main__':
         js = json.load(f)
         git_url = js['upstream_url']
         user_name = js['handle']
+        ignore_submission = js['ignore_submission']
     path = f'{pwd}/submissions'
     # リポジトリ用意
     try:
@@ -171,6 +172,8 @@ if __name__ == '__main__':
                 index = submit['problem']['index']
                 name = submit['problem']['name'].replace(' ', '_')
                 subId = submit['id']
+                if subId in ignore_submission:
+                    continue
 
                 filename = get_filename(submit['programmingLanguage'])
                 contest_name = get_contest_name(contestId).replace(' ', '_')
